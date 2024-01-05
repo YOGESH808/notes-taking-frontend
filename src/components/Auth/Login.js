@@ -1,6 +1,6 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-export default function Login() {
+export default function Login({onLoginSuccess}) {
 	const [formData, setFormData] = useState({
 		usernameOrEmail: '',
 		password: '',
@@ -15,11 +15,18 @@ export default function Login() {
 		e.preventDefault();
 		try {
 			const requestData = {
-				"username":formData.usernameOrEmail,
-				"password":formData.password
+				"username": formData.usernameOrEmail,
+				"password": formData.password
 			}
-			const response = await axios.post('http://localhost:4000/api/auth/login',requestData);
-			console.log(response.data); // Handle success
+			const response = await axios.post('http://localhost:4000/api/auth/login',
+                requestData);
+			console.log(response.data.token);
+			if (response.statusText === "OK") {
+				localStorage.setItem('token', response.data.token);
+				onLoginSuccess();
+			} else {
+				console.error('Login failed');
+			}
 		} catch (error) {
 			console.error(error); // Handle error
 		}
