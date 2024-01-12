@@ -154,11 +154,10 @@ const NotesList = () => {
                 <button type="submit" className="btn btn-primary" onClick={() => handleAction('create')}>Submit</button>
             </form>
             <div className='container'>
-                <h3>Notes Owned by User</h3>
-
+                <h3>Notes Owned by Me</h3>
                 <div className="notes-list container mt-3">
                     {userNotes.map((note) => (
-                        <div className="note-card" key={note._id}>
+                        <div className="card p-4" key={note._id}>
                             {editingNoteId === note._id ? (
                                 <EditForm
                                     noteId={note._id}
@@ -167,14 +166,15 @@ const NotesList = () => {
                                 />
                             ) : (
                                 <>
-                                    <h3 className="note-title">{note.title}</h3>
-                                    <p className="note-content">{note.content}</p>
-                                    <p className="note-created-at">Created at: {note.createdAt}</p>
-                                    <p className="note-owner">Owner: {note.owner}</p>
-                                    {/* Additional details as needed */}
-                                    <button onClick={() => handleAction('edit', note._id)} >Edit</button>
-                                    <button onClick={() => handleAction('delete', note._id)}>Delete</button>
-                                    <button onClick={() => handleAction('share', note._id)}>Share</button>
+                                    <h3 className="card-title">{note.title}</h3>
+                                    <p className="card-text">{note.content}</p>
+                                    <p className="note-created-at">Created at: {Date(note.createdAt)}</p>
+                                    <div className='d-flex m-2 p-2'>
+                                        <button className='mx-2' onClick={() => handleAction('edit', note._id)} >Edit</button>
+                                        <button className='mx-2' onClick={() => handleAction('delete', note._id)}>Delete</button>
+                                        <button className='mx-2' onClick={() => handleAction('share', note._id)}>Share</button>
+                                    </div>
+
                                 </>
                             )}
                         </div>
@@ -182,30 +182,31 @@ const NotesList = () => {
                 </div>
                 <h3>Notes Shared With User</h3>
                 <div className="notes-list container mt-3">
-                    {sharedNotes.map((note) => (
-                        <div className="note-card" key={note._id}>
-                            {editingNoteId === note._id ? (
-                                <EditForm
-                                    noteId={note._id}
-                                    onCancel={() => setEditingNoteId(null)}
-                                    onUpdate={handleUpdateNote}
-                                />
-                            ) : (
-                                <>
-                                    <h3 className="note-title">{note.title}</h3>
-                                    <p className="note-content">{note.content}</p>
-                                    <p className="note-created-at">Created at: {note.createdAt}</p>
-                                    <p className="note-owner">Owner: {note.owner}</p>
-                                    {/* Additional details as needed */}
-                                    <button onClick={() => handleAction('delete', note._id)}>Delete</button>
-                                </>
-                            )}
-                        </div>
-                    ))}
+                    <div className="notes-list container mt-3">
+                        {sharedNotes.map((note) => (
+                            <div className="card p-4" key={note._id}>
+                                {editingNoteId === note._id ? (
+                                    <EditForm
+                                        noteId={note._id}
+                                        onCancel={() => setEditingNoteId(null)}
+                                        onUpdate={handleUpdateNote}
+                                    />
+                                ) : (
+                                    <>
+                                        <h3 className="card-title">{note.title}</h3>
+                                        <p className="card-text">{note.content}</p>
+                                        <p className="note-created-at">Created at: {Date(note.createdAt)}</p>
+                                        <div className='d-flex m-2 p-2'>
+                                            <button className='mx-2' onClick={() => handleAction('delete', note._id)}>Delete</button>
+                                        </div>
+
+                                    </>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-
-
             <div>
                 <button onClick={() => {
                     localStorage.removeItem('token');

@@ -1,27 +1,31 @@
-import { useState,useEffect } from "react";
+import {BrowserRouter as Router,Route,Routes} from "react-router-dom";
 import Login from "./components/Auth/Login";
-import Signup from "./components/Auth/Signup";
+import SignUp from "./components/Auth/Signup";
+import Dashboard from "./components/Dashboard/Dashboard";
 import NotesList from "./components/Notes/NotesList";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [authenticated,setAuthenticated] = useState(false);
 
-  useEffect(() => {
+  useEffect(()=>{
     const isAuthenticated = localStorage.getItem('token') !== null;
-    setIsLoggedIn(isAuthenticated);
-  }, []);
-
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
+    setAuthenticated(isAuthenticated);
+  },[]);
+  const handleLoginSucess = ()=>{
+    setAuthenticated(true);
   };
-
   return (
     <>
-      {isLoggedIn ? (
-        <NotesList />
-      ) : (
-        <Login onLoginSuccess = {handleLoginSuccess}/>
-      )}
+      <Router>
+        <Routes>
+          <Route path="/" Component={Dashboard}></Route>
+          <Route path="/login" element={<Login onLoginSuccess={handleLoginSucess}/>}></Route>
+          <Route path="/signup" Component={SignUp}></Route>
+          <Route path="/notes" element={authenticated?<NotesList/>:<Login onLoginSuccess={handleLoginSucess}/>}></Route>
+          {/* <Route path="/notes/:noteId" element={authenticated?<NoteDetails/>:<Login onLoginSuccess={handleLoginSucess}/>}></Route> */}
+        </Routes>
+      </Router>
     </>
   );
 }
