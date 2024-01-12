@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+const navigate = useNavigate();
   const handleUserNameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -25,6 +26,8 @@ function Signup() {
         formData
       );
       console.log(response.data); // Handle success
+      navigate("/login");
+      
     } catch (error) {
       console.error(error); // Handle error
     }

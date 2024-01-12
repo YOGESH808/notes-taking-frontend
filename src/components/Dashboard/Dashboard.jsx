@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import img1 from "../../assets/img1.jpg"
+import img2 from "../../assets/img2.jpg"
 
 const Dashboard = () => {
   return (
@@ -10,8 +12,8 @@ const Dashboard = () => {
       </header>
 
       <section style={styles.imageSection}>
-        <img src="https://via.placeholder.com/400" alt="Notebook" style={styles.image} />
-        <img src="https://via.placeholder.com/400" alt="Pen and Paper" style={styles.image} />
+        <img src={img1} alt="Notebook" style={styles.image} />
+        <img src={img2} alt="Pen and Paper" style={styles.image} />
       </section>
 
       <section style={styles.authButtons}>
