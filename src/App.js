@@ -4,6 +4,9 @@ import SignUp from "./components/Auth/Signup";
 import Dashboard from "./components/Dashboard/Dashboard";
 import NotesList from "./components/Notes/NotesList";
 import { useEffect, useState } from "react";
+import CreateNote from "./components/Notes/CreateNote";
+import NotesHome from "./components/Notes/NotesHome";
+import NoteDetails from "./components/Notes/NoteDetails";
 
 function App() {
   const [authenticated,setAuthenticated] = useState(false);
@@ -22,8 +25,9 @@ function App() {
           <Route path="/" Component={Dashboard}></Route>
           <Route path="/login" element={<Login onLoginSuccess={handleLoginSucess}/>}></Route>
           <Route path="/signup" Component={SignUp}></Route>
-          <Route path="/notes" element={authenticated?<NotesList/>:<Login onLoginSuccess={handleLoginSucess}/>}></Route>
-          {/* <Route path="/notes/:noteId" element={authenticated?<NoteDetails/>:<Login onLoginSuccess={handleLoginSucess}/>}></Route> */}
+          <Route path="/notes" element={authenticated?<NotesHome/>:<Login onLoginSuccess={handleLoginSucess}/>}></Route>
+          <Route path="/notes/create" element={authenticated?<CreateNote/>:<Login onLoginSuccess={handleLoginSucess}/>}></Route>
+          <Route path="/notes/:noteId" element={authenticated?<NoteDetails/>:<Login onLoginSuccess={handleLoginSucess}/>}></Route>
         </Routes>
       </Router>
     </>

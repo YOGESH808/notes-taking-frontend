@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 export default function Login({ onLoginSuccess }) {
   const [formData, setFormData] = useState({
     usernameOrEmail: '',
@@ -64,6 +65,7 @@ export default function Login({ onLoginSuccess }) {
           Login
         </button>
       </form>
+      <p style={{margin:'10px 0 0 0'}}>Don't have Account <Link to = "/signup">SignUp</Link></p>
     </div>
   );
 }
