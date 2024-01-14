@@ -50,7 +50,7 @@ const NoteList = ({ onEditNote, onShareNote, searchQuery }) => {
 
   useEffect(() => {
     fetchNotes(searchQuery);
-  }, [searchQuery, fetchNotes]);
+  }, [searchQuery]);
   return (
     <main>
       <ul>

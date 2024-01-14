@@ -13,18 +13,14 @@ import { CreateNote, EditNote, NoteDetails, NotesHome} from "./components/Notes/
 
 
 function App() {
-  const [authenticated, setAuthenticated] = useState(false);
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem("token") !== null;
-    setAuthenticated(isAuthenticated);
-  }, []);
+  const [authenticated, setAuthenticated] = useState(localStorage.getItem("token") !== null);
 
   const handleLoginSucess = () => {
     setAuthenticated(true);
   };
-  const handleLogout = () => {
-    console.log("Handle Logout called");
-    localStorage.setItem("token", "");
+
+  const handleLogout = async() => {
+    await localStorage.setItem("token", "");
     setAuthenticated(false);
   };
 
