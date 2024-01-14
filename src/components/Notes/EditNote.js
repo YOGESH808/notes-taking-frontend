@@ -1,11 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-export default function EditNote({ noteId, onCancel, onUpdate }) {
+import { useNavigate, useParams } from 'react-router-dom';
+export default function EditNote() {
     const [note, setNote] = useState({
         title: '',
         content: ''
     });
 
+    const {noteId} = useParams(); 
+    const navigate =useNavigate();
     useEffect(() => {
         const fetchNote = async () => {
             try {
@@ -44,10 +47,15 @@ export default function EditNote({ noteId, onCancel, onUpdate }) {
                 //notify the parent component
 
             );
-            onUpdate();
+            navigate("/notes");
         } catch (error) {
             console.error(error);
         }
+    }
+
+    const handleCancel = async()=>{
+ 
+      navigate("/notes");
     }
     return (
         <div>
@@ -70,7 +78,7 @@ export default function EditNote({ noteId, onCancel, onUpdate }) {
                 onChange={(e) => setNote({ ...note, content: e.target.value })}
             />
             <button onClick={handleUpdate}>Update Now</button>
-            <button onClick={onCancel}>Cancel</button>
+            <button onClick={handleCancel}>Cancel</button>
 
         </div>
     )

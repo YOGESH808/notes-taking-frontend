@@ -1,0 +1,33 @@
+/* src/components/Navbar.css */
+.navbar {
+    background-color: #333;
+    padding: 10px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .search-input {
+    flex: 1; /* Take maximum width available */
+    padding: 5px;
+    margin-left: 10px;
+  }
+  
+  .action-buttons {
+    display: flex;
+  }
+  
+  .action-button {
+    padding: 8px;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .action-button:hover {
+    background-color: #0056b3;
+  }
+  
