@@ -3,11 +3,12 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import NoteList from "./NotesList";
 import axios from "axios";
-const NotesHome = () => {
+import { useNavigate } from "react-router-dom";
+const NotesHome = ({onLogout}) => {
   const [user, setUser] = useState({ name: "John" }); // Replace with actual user data
   const [notes, setNotes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     // Fetch user data and notes from the API
     // Example: fetch('/api/user').then(response => response.json()).then(data => setUser(data));
@@ -17,6 +18,7 @@ const NotesHome = () => {
   const handleLogout = () => {
     // Implement logout functionality (clear session, redirect, etc.)
     console.log("Logout clicked");
+    
   };
 
 
@@ -48,7 +50,7 @@ const NotesHome = () => {
     <div>
       <Navbar
         user={user}
-        onLogout={handleLogout}
+        onLogout={onLogout}
         onSearchChange={setSearchTerm}
       />
       <NoteList
