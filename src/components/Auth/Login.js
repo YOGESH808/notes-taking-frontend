@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import './Login.css';
 export default function Login({ onLoginSuccess }) {
   const [formData, setFormData] = useState({
     usernameOrEmail: '',
@@ -28,8 +29,8 @@ export default function Login({ onLoginSuccess }) {
       console.log(response.data.token);
       if (response.statusText === 'OK') {
         localStorage.setItem('token', response.data.token);
-        onLoginSuccess();
-        navigate("/notes",{replace:true});
+        onLoginSuccess(formData.usernameOrEmail);
+        navigate('/notes', { replace: true });
       } else {
         console.error('Login failed');
       }
@@ -39,66 +40,35 @@ export default function Login({ onLoginSuccess }) {
   };
 
   return (
-    <div style={styles.container}>
+    <div className="login-container">
       <form onSubmit={handleSubmit}>
-        <label style={styles.label}>
+        <label className="login-label">
           Username or Email:
           <input
             type="text"
             name="usernameOrEmail"
             value={formData.usernameOrEmail}
             onChange={handleChange}
-            style={styles.input}
+            className="login-input"
           />
         </label>
-        <label style={styles.label}>
+        <label className="login-label">
           Password:
           <input
             type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
-            style={styles.input}
+            className="login-input"
           />
         </label>
-        <button type="submit" style={styles.button}>
+        <button type="submit" className="login-button">
           Login
         </button>
       </form>
-      <p style={{margin:'10px 0 0 0'}}>Don't have Account <Link to = "/signup">SignUp</Link></p>
+      <p style={{ margin: '10px 0 0 0' }}>
+        Don't have an Account <Link to="/signup">SignUp</Link>
+      </p>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    textAlign: 'center',
-    maxWidth: '300px',
-    margin: 'auto',
-    padding: '20px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-  },
-  label: {
-    display: 'block',
-    margin: '10px 0',
-    fontSize: '16px',
-  },
-  input: {
-    width: '100%',
-    padding: '10px',
-    fontSize: '16px',
-    boxSizing: 'border-box',
-  },
-  button: {
-    width: '100%',
-    padding: '10px',
-    fontSize: '16px',
-    backgroundColor: '#007BFF',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-};

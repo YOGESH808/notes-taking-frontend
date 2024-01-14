@@ -14,9 +14,11 @@ import { CreateNote, EditNote, NoteDetails, NotesHome} from "./components/Notes/
 
 function App() {
   const [authenticated, setAuthenticated] = useState(localStorage.getItem("token") !== null);
+  const [user,setUser] = useState('');
 
-  const handleLoginSucess = () => {
+  const handleLoginSucess = (user) => {
     setAuthenticated(true);
+    setUser(user);
   };
 
   const handleLogout = async() => {
@@ -38,7 +40,7 @@ function App() {
             path="/notes"
             element={
               authenticated ? (
-                <NotesHome onLogout={handleLogout} />
+                <NotesHome onLogout={handleLogout} userName={user}/>
               ) : (
                 <Navigate to="/login" />
               )

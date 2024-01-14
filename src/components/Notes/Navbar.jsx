@@ -2,10 +2,10 @@
 import React from 'react';
 import './Navbar.css'; // Import the CSS file for styling
 import { Link } from 'react-router-dom';
-const Navbar = ({ user, onAddNote, onLogout, onSearchChange }) => {
+const Navbar = ({ user, onLogout, onSearchChange }) => {
   return (
     <nav className="navbar">
-      <span>Hello, {user.name}</span>
+      <span>Hello, {user}</span>
       <input
         type="text"
         placeholder="Search"

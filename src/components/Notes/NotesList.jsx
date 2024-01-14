@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import NoteItem from "./NoteItem";
 import axios from "axios";
-const NoteList = ({ onEditNote, onShareNote, searchQuery }) => {
+const NoteList = ({onShareNote, searchQuery }) => {
   const [notes, setNotes] = useState([]);
   const [userNotes, setUserNotes] = useState([]);
   const [sharedNotes, setSharedNotes] = useState([]);
@@ -45,7 +45,6 @@ const NoteList = ({ onEditNote, onShareNote, searchQuery }) => {
       },
     });
     fetchNotes();
-    // Update the UI by fetching the updated notes
   };
 
   useEffect(() => {
@@ -58,37 +57,39 @@ const NoteList = ({ onEditNote, onShareNote, searchQuery }) => {
           <NoteItem
             key={note._id}
             note={note}
-            onEdit={() => onEditNote(note._id)}
             onDelete={() => handleDeleteNote(note._id)}
-            onShare={() => onShareNote(note._id)}
           />
         ))}
       </ul>
-      <h1>Your Notes</h1>
-
+      {userNotes.length>0?(
+        <>
+         <h1>Your Notes</h1>
       <ul>
         {userNotes.map((note) => (
           <NoteItem
             key={note._id}
             note={note}
-            onEdit={() => onEditNote(note._id)}
             onDelete={() => handleDeleteNote(note._id)}
-            onShare={() => onShareNote(note._id)}
           />
         ))}
       </ul>
-      <h1>Shared Notes With You</h1>
+        </>
+      ):<>No Notes.. create one</>}
+      {sharedNotes.length>0?(
+        <>
+         <h1>Shared Notes With You</h1>
       <ul>
         {sharedNotes.map((note) => (
           <NoteItem
             key={note._id}
             note={note}
-            onEdit={() => onEditNote(note._id)}
             onDelete={() => handleDeleteNote(note._id)}
-            onShare={() => onShareNote(note._id)}
           />
         ))}
       </ul>
+        </>
+      ):<></>}
+      
     </main>
   );
 };
