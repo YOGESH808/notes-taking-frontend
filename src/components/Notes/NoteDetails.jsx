@@ -7,7 +7,7 @@ function NoteDetails() {
   const fetchDetails = useCallback(async () => {
     const noteResponse = await axios.get(`http://localhost:4000/api/notes/${noteId}`, {
       headers: {
-        Authorization: `Bearer${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
     });

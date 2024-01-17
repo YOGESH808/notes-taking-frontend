@@ -14,7 +14,7 @@ const NoteList = ({onShareNote, searchQuery }) => {
           `http://localhost:4000/api/search?q=${searchQuery}`,
           {
             headers: {
-              Authorization: `Bearer${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
               "Content-Type": "application/json",
             },
           }
@@ -23,7 +23,7 @@ const NoteList = ({onShareNote, searchQuery }) => {
       } else {
         const response = await axios.get("http://localhost:4000/api/notes", {
           headers: {
-            Authorization: `Bearer${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
         });
@@ -40,7 +40,7 @@ const NoteList = ({onShareNote, searchQuery }) => {
   const handleDeleteNote = async (noteId) => {
     await axios.delete(`http://localhost:4000/api/notes/${noteId}`, {
       headers: {
-        Authorization: `Bearer${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
     });

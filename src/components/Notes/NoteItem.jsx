@@ -15,7 +15,7 @@ const NoteItem = ({ note, onDelete, onShare }) => {
         },
         {
             headers: {
-                'Authorization': `Bearer${localStorage.getItem('token')}`,
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Content-Type': 'application/json',
             },
         }
@@ -36,7 +36,7 @@ const NoteItem = ({ note, onDelete, onShare }) => {
         <button className="note-button delete-button" onClick={onDelete}>
           Delete
         </button>
-        <button className="note-button share-button" onClick={handleShareNote}>
+        <button className="note-button share-button" onClick={()=>handleShareNote(note._id)}>
           Share
         </button>
       </div>

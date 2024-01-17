@@ -7,18 +7,15 @@ import {
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/Signup";
 import Dashboard from "./components/Dashboard/Dashboard";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CreateNote, EditNote, NoteDetails, NotesHome} from "./components/Notes/index.js";
 
-
+import UserContextProvider from "./context/UserContextProvider.jsx";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(localStorage.getItem("token") !== null);
-  const [user,setUser] = useState('');
-
-  const handleLoginSucess = (user) => {
+  const handleLoginSucess = () => {
     setAuthenticated(true);
-    setUser(user);
   };
 
   const handleLogout = async() => {
@@ -27,7 +24,7 @@ function App() {
   };
 
   return (
-    <>
+    <UserContextProvider>
       <Router>
         <Routes>
           <Route path="/" Component={Dashboard}></Route>
@@ -40,7 +37,7 @@ function App() {
             path="/notes"
             element={
               authenticated ? (
-                <NotesHome onLogout={handleLogout} userName={user}/>
+                <NotesHome onLogout={handleLogout}/>
               ) : (
                 <Navigate to="/login" />
               )
@@ -60,7 +57,7 @@ function App() {
           />
         </Routes>
       </Router>
-    </>
+    </UserContextProvider>
   );
 }
 

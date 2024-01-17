@@ -5,6 +5,7 @@ import { useNavigate ,Link} from 'react-router-dom';
 function Signup() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 const navigate = useNavigate();
   const handleUserNameChange = (event) => {
     setUsername(event.target.value);
@@ -21,20 +22,33 @@ const navigate = useNavigate();
         username: username,
         password: password,
       };
+      if(username =='' || password===''){
+        setError('Please enter a username and password');
+        setTimeout(()=>{
+          setError(null);
+        },1500);
+        return;
+      }
       const response = await axios.post(
         'http://localhost:4000/api/auth/signup',
         formData
       );
-      console.log(response.data); // Handle success
       navigate("/login");
       
     } catch (error) {
-      console.error(error); // Handle error
+      setError(error.message);
+     
     }
   };
 
   return (
+    
     <div style={styles.container}>
+      {error && (
+      <div className="bg-red-500 p-3 fixed top-0 z-10 text-brightWhite mx-auto font-medium rounded-b-lg flex items-center">
+        {error}
+      </div>
+    ) }
       <form onSubmit={handleSubmit}>
         <label style={styles.label}>
           Username:
