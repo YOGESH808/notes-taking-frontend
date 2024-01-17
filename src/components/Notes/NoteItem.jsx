@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './NoteItem.css';
 import axios from 'axios';
+import DeleteConfirmationModel from './DeleteConfirmationModel';
 
 const NoteItem = ({ note, onDelete, onShare }) => {
+  const [showDeleteModel,setShowDeleteModel] = useState(false);
+  const [showShareModel,setShowShareModel] = useState(false)
+  const handleCancelDelete = ()=>{
+    setShowDeleteModel(false);
+  }
+  const handleDeleteConfirmed = ()=>{
+    onDelete();
+  }
   const handleShareNote = async(noteId) => {
     // Implement functionality to share a note
     const shareWithName = window.prompt('Enter the name of the user to share with:');
@@ -33,9 +42,11 @@ const NoteItem = ({ note, onDelete, onShare }) => {
           Edit
       </Link>
         
-        <button className="note-button delete-button" onClick={onDelete}>
+        <button className="note-button delete-button" onClick={()=>setShowDeleteModel(true)}>
           Delete
         </button>
+
+        {showDeleteModel && <DeleteConfirmationModel onCancel={handleCancelDelete} onConfirm={handleDeleteConfirmed}/>}
         <button className="note-button share-button" onClick={()=>handleShareNote(note._id)}>
           Share
         </button>
