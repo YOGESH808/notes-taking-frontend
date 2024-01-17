@@ -78,4 +78,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 <!-- More fields for user -->
 <!-- authentication token safety -->
 <!-- handle errors and show to the users -->
-<!-- user login, then username should be shown -->

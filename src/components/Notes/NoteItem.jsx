@@ -5,7 +5,7 @@ import axios from "axios";
 import DeleteConfirmationModel from "./DeleteConfirmationModel";
 import ShareModelCard from "./ShareModelCard";
 
-const NoteItem = ({ note, onDelete, onShare }) => {
+const NoteItem = ({ note, onDelete}) => {
   const [showDeleteModel, setShowDeleteModel] = useState(false);
   const [showShareModel, setShowShareModel] = useState(false);
   const [error, setError] = useState(null);
@@ -37,6 +37,7 @@ const NoteItem = ({ note, onDelete, onShare }) => {
         }
       );
       setError("Note is Shared");
+      setShowShareModel(false)
     } catch (error) {
       if (error.response) {
         setError(error.response.data.message);
@@ -80,9 +81,9 @@ const NoteItem = ({ note, onDelete, onShare }) => {
           Share
         </button>
         {error && (
-          <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-          <strong class="font-bold">Error! </strong>
-          <span class="block sm:inline">{error}</span>
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <strong className="font-bold">Error! </strong>
+          <span className="block sm:inline">{error}</span>
         </div>
         )}
         {showShareModel && (
