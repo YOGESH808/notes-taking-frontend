@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate ,Link} from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 
 function Signup() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const handleUserNameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -15,6 +16,22 @@ const navigate = useNavigate();
     setPassword(event.target.value);
   };
 
+  const handleAlert = (alertType,msg)=>{
+    setError({
+      type: alertType,
+      msg:msg
+    });
+    setTimeout(() => {
+      setError(null);
+    }, 1500);
+  }
+
+  const displayAlert = (alertType,msg)=>{
+    return( <div className={`${alertType == "Success"?'bg-green-500':'bg-red-500'} p-3 fixed top-0 z-10 text-brightWhite mx-auto font-medium rounded-b-lg flex items-center`}>
+          {msg}
+        </div>)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -22,96 +39,58 @@ const navigate = useNavigate();
         username: username,
         password: password,
       };
-      if(username =='' || password===''){
-        setError('Please enter a username and password');
-        setTimeout(()=>{
-          setError(null);
-        },1500);
+      if (username === "" || password === "") {
+        handleAlert("failure","Username and password is required");        
         return;
       }
       const response = await axios.post(
-        'http://localhost:4000/api/auth/signup',
+        "http://localhost:4000/api/auth/signup",
         formData
       );
-      navigate("/login");
-      
+      handleAlert("Success","User registered successfully");
     } catch (error) {
-      setError(error.message);
-     
+      console.log(error);
+      if(error.message)
+      {
+        handleAlert("failure",error.response.data.message);
+      }
+      else{
+        handleAlert("failure",error.message);
+      }
     }
   };
 
   return (
-    
-    <div style={styles.container}>
+    <div>
       {error && (
-      <div className="bg-red-500 p-3 fixed top-0 z-10 text-brightWhite mx-auto font-medium rounded-b-lg flex items-center">
-        {error}
-      </div>
-    ) }
+        displayAlert(error.type,error.msg)
+      )}
       <form onSubmit={handleSubmit}>
-        <label style={styles.label}>
+        <label>
           Username:
           <input
             type="text"
             name="username"
             value={username}
             onChange={handleUserNameChange}
-            style={styles.input}
           />
         </label>
         <br />
-        <label style={styles.label}>
+        <label>
           Password:
           <input
             type="password"
             name="password"
             value={password}
             onChange={handlePasswordChange}
-            style={styles.input}
           />
         </label>
-        <button type="submit" style={styles.button}>
-          Sign Up
-        </button>
+        <button type="submit">Sign Up</button>
       </form>
-      <p style={{margin:'10px 0 0 0'}}>Already have an Account <Link to = "/login">Login</Link></p>
-
+      <p>
+        Already have an Account <Link to="/login">Login</Link>
+      </p>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    textAlign: 'center',
-    maxWidth: '300px',
-    margin: 'auto',
-    padding: '20px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-  },
-  label: {
-    display: 'block',
-    margin: '10px 0',
-    fontSize: '16px',
-  },
-  input: {
-    width: '100%',
-    padding: '10px',
-    fontSize: '16px',
-    boxSizing: 'border-box',
-  },
-  button: {
-    width: '100%',
-    padding: '10px',
-    fontSize: '16px',
-    backgroundColor: '#28a745',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-};
-
 export default Signup;

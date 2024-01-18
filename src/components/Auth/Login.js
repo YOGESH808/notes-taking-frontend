@@ -17,6 +17,27 @@ export default function Login({ onLoginSuccess }) {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const handleAlert = (alertType, msg) => {
+    setError({
+      type: alertType,
+      msg: msg,
+    });
+    setTimeout(() => {
+      setError(null);
+    }, 1500);
+  };
+
+  const displayAlert = (alertType, msg) => {
+    return (
+      <div
+        className={`${
+          alertType == "Success" ? "bg-green-500" : "bg-red-500"
+        } p-3 fixed top-0 z-10 text-brightWhite mx-auto font-medium rounded-b-lg flex items-center`}
+      >
+        {msg}
+      </div>
+    );
+  };
   const { setUser } = useContext(UserContext);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,14 +54,20 @@ export default function Login({ onLoginSuccess }) {
         localStorage.setItem("token", response.data.token);
         onLoginSuccess(formData.usernameOrEmail);
         setUser(formData.usernameOrEmail);
-
         navigate("/notes", { replace: true });
       } else {
-        setError(error.message);
+        if (error.message) {
+          handleAlert("failure", error.response.data.message);
+        } else {
+          handleAlert("failure", error.message);
+        }
       }
     } catch (error) {
-      setError(error.message);
-      setTimeout(() => setError(null), 1500);
+      if (error.message) {
+        handleAlert("failure", error.response.data.message);
+      } else {
+        handleAlert("failure", error.message);
+      }
     }
   };
 
@@ -48,15 +75,11 @@ export default function Login({ onLoginSuccess }) {
     <>
       <div className="flex h-screen w-screen">
         <div className="left w-1/3">
-         <p>Some Left design</p>
+          <p>Some Left design</p>
         </div>
         <div className="right w-2/3">
           <div className="login-container bg-slate-50">
-            {error && (
-              <div className="bg-red-500 p-3 fixed top-0 z-10 text-brightWhite mx-auto font-medium rounded-b-lg flex items-center">
-                {error}
-              </div>
-            )}
+            {error && displayAlert(error.type, error.msg)}
             <form onSubmit={handleSubmit}>
               <label className="login-label">
                 Username or Email:

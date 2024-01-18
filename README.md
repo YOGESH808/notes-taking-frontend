@@ -72,9 +72,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 <!-- note delete undo -->
 <!-- import shared notes -->
-<!-- optimize search query -->
 <!-- table and pagination -->
 <!-- rich text editor for content -->
 <!-- More fields for user -->
 <!-- authentication token safety -->
-<!-- handle errors and show to the users -->
