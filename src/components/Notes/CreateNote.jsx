@@ -7,8 +7,29 @@ const CreateNote = () => {
   const [newNoteContent, setNewNoteContent] = useState('');
   const [newNoteTitle, setNewNoteTitle] = useState('');
   const [redirectToNotes, setRedirectToNotes] = useState(false);
-  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+  const handleAlert = (alertType, msg) => {
+    setError({
+      type: alertType,
+      msg: msg,
+    });
+    setTimeout(() => {
+      setError(null);
+    }, 1500);
+  };
+  const displayAlert = (alertType, msg) => {
+    return (
+      <div
+        className={`${
+          alertType == "Success" ? "bg-green-500" : "bg-red-500"
+        } p-3 fixed top-0 z-10 text-brightWhite mx-auto font-medium rounded-b-lg flex items-center`}
+      >
+        {msg}
+      </div>
+    );
+  };
   const handleAddNote = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -31,7 +52,7 @@ const CreateNote = () => {
       // Set the state to trigger a redirect
       setRedirectToNotes(true);
     } catch (error) {
-      console.error(error);
+      handleAlert("failure", error.messgae || error.response.data.message);
     }
   };
 
@@ -46,6 +67,7 @@ const CreateNote = () => {
     <div className="container mx-auto p-4"> {/* Centered container with padding */}
   <div className="bg-white p-8 rounded-lg shadow-md">
     <h1 className="text-2xl font-semibold mb-6">Create New Note</h1>
+    {error && displayAlert(error.type, error.msg)}
     <div className="space-y-6">
       <div className="mb-4">
         <label htmlFor="title" className="block text-gray-700 font-medium mb-2">
