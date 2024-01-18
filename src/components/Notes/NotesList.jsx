@@ -52,48 +52,50 @@ const NoteList = ({ searchQuery }) => {
   }, [searchQuery]);
   return (
     <main>
-      <ul>
-        {notes.map((note) => (
-          <NoteItem
-            key={note._id}
-            note={note}
-            onDelete={() => handleDeleteNote(note._id)}
-          />
-        ))}
-      </ul>
-      {userNotes.length > 0 ? (
-        <>
-          <h1>Your Notes</h1>
-          <ul>
-            {userNotes.map((note) => (
-              <NoteItem
-                key={note._id}
-                note={note}
-                onDelete={() => handleDeleteNote(note._id)}
-              />
-            ))}
-          </ul>
-        </>
-      ) : (
-        <>No Notes.. create one</>
-      )}
-      {sharedNotes.length > 0 ? (
-        <>
-          <h1>Shared Notes With You</h1>
-          <ul>
-            {sharedNotes.map((note) => (
-              <NoteItem
-                key={note._id}
-                note={note}
-                onDelete={() => handleDeleteNote(note._id)}
-              />
-            ))}
-          </ul>
-        </>
-      ) : (
-        <></>
-      )}
-    </main>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+      {notes.map((note) => (
+        <NoteItem
+          key={note._id}
+          note={note}
+          onDelete={() => handleDeleteNote(note._id)}
+          className="w-full h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 overflow-hidden shadow-md hover:shadow-lg rounded-lg bg-white"
+        />
+      ))}
+    </div>
+    {userNotes.length > 0 && (
+      <section className="mt-8">
+        <h1 className="text-lg font-semibold mb-4">Your Notes</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+          {userNotes.map((note) => (
+            <NoteItem
+              key={note._id}
+              note={note}
+              onDelete={() => handleDeleteNote(note._id)}
+              className="w-full h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 overflow-hidden shadow-md hover:shadow-lg rounded-lg bg-white"
+            />
+          ))}
+        </div>
+      </section>
+    )}
+    {sharedNotes.length > 0 && (
+      <section className="mt-8">
+        <h1 className="text-lg font-semibold mb-4">Shared Notes With You</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+          {sharedNotes.map((note) => (
+            <NoteItem
+              key={note._id}
+              note={note}
+              onDelete={() => handleDeleteNote(note._id)}
+              className="w-full h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 overflow-hidden shadow-md hover:shadow-lg rounded-lg bg-white"
+            />
+          ))}
+        </div>
+      </section>
+    )}
+  </main>
+  
+  
+  
   );
 };
 

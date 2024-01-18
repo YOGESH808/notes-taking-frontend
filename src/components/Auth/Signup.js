@@ -61,36 +61,57 @@ function Signup() {
   };
 
   return (
-    <div>
-      {error && (
-        displayAlert(error.type,error.msg)
-      )}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
+    <div className="min-h-screen flex">
+    <div className="w-1/2 bg-gray-100 flex items-center justify-center">
+      <div className="p-8 text-center space-y-4">
+        {/* Content on the left side */}
+      </div>
+    </div>
+    <div className="w-1/2 bg-white p-8 flex flex-col items-center">
+      {error && displayAlert(error.type, error.msg)}
+      <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-md">
+        <div className="mb-4">
+          <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+            Username:
+          </label>
           <input
             type="text"
+            id="username"
             name="username"
             value={username}
             onChange={handleUserNameChange}
+            className="border appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-        </label>
-        <br />
-        <label>
-          Password:
+        </div>
+  
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            Password:
+          </label>
           <input
             type="password"
+            id="password"
             name="password"
             value={password}
             onChange={handlePasswordChange}
+            className="border appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
-        </label>
-        <button type="submit">Sign Up</button>
+        </div>
+  
+        <button
+          type="submit"
+          className="btn-login bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Sign Up
+        </button>
       </form>
-      <p>
-        Already have an Account <Link to="/login">Login</Link>
+  
+      <p className="text-center text-gray-600 text-sm mt-4">
+        Already have an Account? <Link to="/login" className="text-blue-600 hover:text-blue-500 font-medium">Login</Link>
       </p>
     </div>
+  </div>
+  
   );
 }
 export default Signup;

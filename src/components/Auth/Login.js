@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import "./Login.css";
 import UserContext from "../../context/UserContext";
 export default function Login({ onLoginSuccess }) {
   const [formData, setFormData] = useState({
@@ -72,45 +71,59 @@ export default function Login({ onLoginSuccess }) {
   };
 
   return (
-    <>
-      <div className="flex h-screen w-screen">
-        <div className="left w-1/3">
-          <p>Some Left design</p>
-        </div>
-        <div className="right w-2/3">
-          <div className="login-container bg-slate-50">
-            {error && displayAlert(error.type, error.msg)}
-            <form onSubmit={handleSubmit}>
-              <label className="login-label">
-                Username or Email:
-                <input
-                  type="text"
-                  name="usernameOrEmail"
-                  value={formData.usernameOrEmail}
-                  onChange={handleChange}
-                  className="login-input"
-                />
-              </label>
-              <label className="login-label">
-                Password:
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="login-input"
-                />
-              </label>
-              <button type="submit" className="login-button">
-                Login
-              </button>
-            </form>
-            <p style={{ margin: "10px 0 0 0" }}>
-              Don't have an Account <Link to="/signup">SignUp</Link>
-            </p>
-          </div>
-        </div>
+    <div className="min-h-screen flex">
+    <div className="w-1/2 bg-gray-100 flex items-center justify-center">
+      <div className="p-8 text-center space-y-4">
+        <h2 className="text-3xl font-bold text-gray-800">Welcome Back!</h2>
+        <p className="text-gray-600">
+          Log in to access your notes and continue where you left off.
+        </p>
+        <img src="/path/to/image.jpg" alt="App logo" width="200" />
       </div>
-    </>
+    </div>
+    <div className="w-1/2 bg-white p-8 flex flex-col items-center">
+      {error && displayAlert(error.type, error.msg)}
+      <form onSubmit={handleSubmit} className="space-y-6 w-full max-w-md">
+        <div className="mb-4">
+          <label htmlFor="usernameOrEmail" className="block text-sm font-medium text-gray-700">
+            Username or Email:
+          </label>
+          <input
+            type="text"
+            id="usernameOrEmail"
+            name="usernameOrEmail"
+            value={formData.usernameOrEmail}
+            onChange={handleChange}
+            className="border appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+  
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            Password:
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="border appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+  
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Login
+        </button>
+      </form>
+  
+      <p className="text-center text-gray-600 text-sm mt-4">
+        Don't have an account? <Link to="/signup" className="text-blue-600 hover:text-blue-500 font-medium">Sign Up</Link>
+      </p>
+    </div>
+  </div>
   );
 }
